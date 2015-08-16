@@ -6,6 +6,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.pandore.ffxiv.lodestone.entity.LSCharacter;
 import com.pandore.ffxiv.lodestone.entity.LSFreeCompany;
@@ -15,6 +17,8 @@ import exceptions.UnexpectedHtmlStructureException;
 
 public class FreeCompanyParser {
 	
+	private static Logger logger = LoggerFactory.getLogger(FreeCompanyParser.class);
+	
 	private boolean verbose = true;
 	
 	private final String rootUrl;
@@ -23,6 +27,13 @@ public class FreeCompanyParser {
 		this.rootUrl = rootUrl;
 	}
 	
+	/**
+	 * 
+	 * @param freeCompanyId
+	 * @param parseMembers fetch company members. If one member cannot be fetched for any reason, it will keep trying to fetch the other members
+	 * @return
+	 * @throws LodestoneParserException
+	 */
 	public LSFreeCompany getFreeCompanyById(String freeCompanyId, boolean parseMembers) throws LodestoneParserException {
 		if (verbose) {
 			System.out.println("Parsing Lodestone for free company " + freeCompanyId);
@@ -58,10 +69,6 @@ public class FreeCompanyParser {
 		Elements infoTable = html.select("table.table_style2 > tbody");
 		ParserUtils.checkElementsSize(infoTable, 1, "Cannot find HTML for free company info");
 		Element table = infoTable.first();
-		
-//		for (Element th : table.select("tr > th")) {
-//			System.out.println(th.text());
-//		}
 		
 		// get world
 		Elements spans = html.select("div.ic_freecompany_box > div.crest_id.centering_h > span"); // there will be several, get the last one
@@ -120,8 +127,12 @@ public class FreeCompanyParser {
 		for (Element member : members) {
 			// format should be "/lodestone/character/id/
 			String characterId = member.attr("href").split("/")[3];
-			LSCharacter character = characterParser.getCharacterById(characterId);
-			freeCompany.addMember(character);
+			try {
+				LSCharacter character = characterParser.getCharacterById(characterId);
+				freeCompany.addMember(character);
+			} catch (LodestoneParserException e) {
+				logger.error("Could not fetch character from lodestone [id " + characterId + "]", e);
+			}
 		}
 		
 		// Check if we need to continue to next page

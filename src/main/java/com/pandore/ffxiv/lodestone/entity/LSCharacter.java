@@ -5,8 +5,6 @@ import java.util.List;
 
 public class LSCharacter {
 	
-	
-	
 	private String id;
 	
 	private String name;
@@ -97,7 +95,7 @@ public class LSCharacter {
 			}
 		}
 		
-		itemLevel = totalLevel / numberOfItems; 
+		itemLevel = Math.round(totalLevel / numberOfItems); 
 		
 //		// round up of totalLevel / numberOfItems
 //		itemLevel = (totalLevel + numberOfItems - 1) / numberOfItems;
