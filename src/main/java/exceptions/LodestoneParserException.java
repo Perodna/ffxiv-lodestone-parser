@@ -2,6 +2,8 @@ package exceptions;
 
 public class LodestoneParserException extends Exception {
 
+	private static final long serialVersionUID = 8666539731191111629L;
+
 	public LodestoneParserException() {
 		super();
 	}

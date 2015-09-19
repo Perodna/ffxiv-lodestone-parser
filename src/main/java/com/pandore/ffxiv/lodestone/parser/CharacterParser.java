@@ -9,6 +9,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.pandore.ffxiv.lodestone.entity.LSCharacter;
 import com.pandore.ffxiv.lodestone.entity.LSItem;
@@ -17,6 +19,7 @@ import exceptions.LodestoneParserException;
 
 public class CharacterParser {
 	
+	private static Logger logger = LoggerFactory.getLogger(CharacterParser.class);
 	private boolean verbose = true;
 	
 	private final String rootUrl;
@@ -31,7 +34,7 @@ public class CharacterParser {
 	
 	public LSCharacter getCharacterById(String characterId) throws LodestoneParserException {
 		if (verbose) {
-			System.out.println("Parsing Lodestone for character " + characterId);
+			logger.info("Parsing Lodestone for character " + characterId);
 		}
 		
 		// result

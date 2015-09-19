@@ -77,13 +77,19 @@ public class LSCharacter {
 	}
 	
 	private void computeItemLevel() {
+		// TODO
+		// 1. Consider the number of slots for an item
+		//    (2 slots for 2 handed weapons, 2 slots for some body and legs gear)
+		// 2. An empty slot will counts as 0, and against the iLevel
+		
 		int totalLevel = 0;
 		int numberOfItems = 0;
 		
-		
 		if (weapon != null) {
-			totalLevel += weapon.getLevel();
-			numberOfItems++;
+			// 2-handed weapons count as 2 items of the weapon level
+			// For now, consider all weapons as 2-handed
+			totalLevel += 2 * weapon.getLevel();
+			numberOfItems += 2;
 		}
 		
 		if (gearSet != null) {
@@ -95,10 +101,8 @@ public class LSCharacter {
 			}
 		}
 		
-		itemLevel = Math.round(totalLevel / numberOfItems); 
-		
-//		// round up of totalLevel / numberOfItems
-//		itemLevel = (totalLevel + numberOfItems - 1) / numberOfItems;
+		// the game always rounds down the average iLevel, so we can use int division
+		itemLevel = totalLevel / numberOfItems;
 	}
 	
 	public String getClassOrJob() {
@@ -143,16 +147,14 @@ public class LSCharacter {
 					return "BLM";
 				case "Summoner":
 					return "SMN";
-					
-				// TODO gathering classes
-				// TODO crafting classes
 		
 				default:
 					return fullJobName;
 			}
 		}
 		
-		// If there is no job stone, use the class of the weapon (it can't be the job of the weapon)
+		// If there is no job stone, use the *class* of the weapon.
+		// (SCH weapons have only SCH listed, but then there would be would be a job stone)
 		if (weapon == null || weapon.getClasses() == null || weapon.getClasses().isEmpty()) {
 			return null;
 		}

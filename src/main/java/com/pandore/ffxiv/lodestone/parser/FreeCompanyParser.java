@@ -18,7 +18,6 @@ import exceptions.UnexpectedHtmlStructureException;
 public class FreeCompanyParser {
 	
 	private static Logger logger = LoggerFactory.getLogger(FreeCompanyParser.class);
-	
 	private boolean verbose = true;
 	
 	private final String rootUrl;
@@ -36,7 +35,7 @@ public class FreeCompanyParser {
 	 */
 	public LSFreeCompany getFreeCompanyById(String freeCompanyId, boolean parseMembers) throws LodestoneParserException {
 		if (verbose) {
-			System.out.println("Parsing Lodestone for free company " + freeCompanyId);
+			logger.info("Parsing Lodestone for free company " + freeCompanyId);
 		}
 		
 		// result
