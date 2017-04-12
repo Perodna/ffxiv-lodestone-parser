@@ -30,7 +30,7 @@ public class FreeCompanyParseTest {
 	public void TestParseSmallFCWithMembers() throws LodestoneParserException {
 		LodestoneParser parser = new LodestoneParser();
 		
-		String fcId = "9237023573225275675"; // The Sanctum (Kennard's FC, small one with ~20 members -> 1 page)
+		String fcId = "9237023573225246178";
 		LSFreeCompany fc = parser.getFreeCompanyByid(fcId, true);
 		
 		System.out.println(fc.toString());

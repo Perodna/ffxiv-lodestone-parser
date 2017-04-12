@@ -9,6 +9,7 @@ public class LSFreeCompany {
 	private String name;
 	private String tag;
 	private String world;
+	private String gc;
 	private int rank;
 	
 	private List<LSCharacter> members = new ArrayList<LSCharacter>();
@@ -39,6 +40,13 @@ public class LSFreeCompany {
 	}
 	public void setWorld(String world) {
 		this.world = world;
+	}
+
+	public String getGc() {
+		return gc;
+	}
+	public void setGc(String gc) {
+		this.gc = gc;
 	}
 
 	public int getRank() {

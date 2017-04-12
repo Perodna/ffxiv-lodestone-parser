@@ -37,7 +37,7 @@ public class CharacterParser {
 	
 	public LSCharacter getCharacterById(String characterId) throws LodestoneParserException {
 		if (verbose) {
-			logger.info("Parsing Lodestone for character " + characterId);
+			logger.info("Parsing Lodestone for character {}", characterId);
 		}
 		
 		// result
