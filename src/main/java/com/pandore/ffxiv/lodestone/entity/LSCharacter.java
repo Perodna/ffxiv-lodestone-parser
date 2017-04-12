@@ -80,14 +80,15 @@ public class LSCharacter {
 		// TODO
 		// 1. Consider the number of slots for an item
 		//    (2 slots for 2 handed weapons, 2 slots for some body and legs gear)
-		// 2. An empty slot will counts as 0, and against the iLevel
+		// 2. An empty slot should count as 0, and against the iLevel
 		
 		int totalLevel = 0;
 		int numberOfItems = 0;
 		
 		if (weapon != null) {
-			// 2-handed weapons count as 2 items of the weapon level
-			// For now, consider all weapons as 2-handed
+			// 2-handed weapons count as 2 items of the weapon level. Most weapons are like this.
+			// Exceptions are PLD swords, and 1-handed canes/rods (WHM/BLM)
+			// For now, consider all weapons as 2-handed. FIXME
 			totalLevel += 2 * weapon.getLevel();
 			numberOfItems += 2;
 		}
@@ -119,6 +120,7 @@ public class LSCharacter {
 		
 		if (jobStone !=null) {
 			String fullJobName = jobStone.getName().replace("Soul of the ", "");
+			// TODO use an enum to avoid this ugly switch..case
 			switch (fullJobName) {
 				// Battle classes
 				case "Paladin":
@@ -165,5 +167,19 @@ public class LSCharacter {
 	public String toString() {
 		return "LSCharacter [id=" + id + ", name=" + name + ", world=" + world
 				+ ", title=" + title +  ", class/job=" + getClassOrJob() + ", level=" + level + ", itemLevel=" + itemLevel + "]";
+	}
+
+	public String printCharacter(boolean detailed) {
+		if (!detailed) {
+			return toString();
+		}
+
+		StringBuffer buffer = new StringBuffer();
+		buffer.append(toString()).append("\n");
+		buffer.append("   ").append(weapon.toString()).append("\n");
+		for (LSItem item : gearSet) {
+			buffer.append("   ").append(item.toString()).append("\n");
+		}
+		return buffer.toString();
 	}
 }

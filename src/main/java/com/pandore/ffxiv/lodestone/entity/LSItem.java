@@ -6,6 +6,7 @@ public class LSItem {
 	
 	private static final String CATEGORY_SOUL_CRYSTAL = "Soul Crystal";
 
+	int id;
 	int level;
 	String name;
 	String category;

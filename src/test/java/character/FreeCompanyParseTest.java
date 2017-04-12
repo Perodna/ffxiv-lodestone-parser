@@ -1,5 +1,6 @@
 package character;
 
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.pandore.ffxiv.lodestone.entity.LSFreeCompany;
@@ -9,6 +10,11 @@ import exceptions.LodestoneParserException;
 
 public class FreeCompanyParseTest {
 
+	@BeforeClass
+	public static void setupProxy() {
+		System.setProperty("http.proxyHost", "127.0.0.1");
+		System.setProperty("http.proxyPort", "3129");
+	}
 	
 	@Test
 	public void TestParseFreeCompanyByIdWithoutMembers() throws LodestoneParserException {
@@ -20,7 +26,7 @@ public class FreeCompanyParseTest {
 		System.out.println(fc.toString());
 	}
 	
-//	@Test
+	@Test
 	public void TestParseSmallFCWithMembers() throws LodestoneParserException {
 		LodestoneParser parser = new LodestoneParser();
 		
@@ -30,7 +36,7 @@ public class FreeCompanyParseTest {
 		System.out.println(fc.toString());
 	}
 	
-//	@Test
+	@Test
 	public void TestParseBigFCWithMembers() throws LodestoneParserException {
 		LodestoneParser parser = new LodestoneParser();
 		

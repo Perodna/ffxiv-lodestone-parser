@@ -1,11 +1,18 @@
 package character;
 
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.pandore.ffxiv.lodestone.entity.LSCharacter;
 import com.pandore.ffxiv.lodestone.parser.LodestoneParser;
 
 public class CharacterParseTest {
+	
+	@BeforeClass
+	public static void setupProxy() {
+		System.setProperty("http.proxyHost", "127.0.0.1");
+		System.setProperty("http.proxyPort", "3129");
+	}
 	
 	@Test
 	public void TestParseCharacterById() throws Exception {
@@ -17,7 +24,7 @@ public class CharacterParseTest {
 		
 		LSCharacter character = parser.getCharacterById(characterId);
 		
-		System.out.println(character.toString());
+		System.out.println(character.printCharacter(true));
 	}
 
 }
