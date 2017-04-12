@@ -6,13 +6,20 @@ public class LSItem {
 	
 	private static final String CATEGORY_SOUL_CRYSTAL = "Soul Crystal";
 
-	int id;
+	String id;
 	int level;
 	String name;
 	String category;
 	
 	List<String> classes;
-	
+
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+
 	public int getLevel() {
 		return level;
 	}
@@ -44,7 +51,7 @@ public class LSItem {
 	
 	@Override
 	public String toString() {
-		return "LSItem [level=" + level + ", name=" + name + ", category="
+		return "LSItem [id=" + id + ", level=" + level + ", name=" + name + ", category="
 				+ category + ", classes=" + classes + "]";
 	}
 	public boolean isJobStone() {

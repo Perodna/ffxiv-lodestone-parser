@@ -1,5 +1,6 @@
 package com.pandore.ffxiv.lodestone.parser;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -156,7 +157,14 @@ public class CharacterParser {
 	
 	private LSItem parseItem(Element element) throws LodestoneParserException {
 		LSItem item = new LSItem();
-		
+
+		// get item lodestone id
+		Elements lodestoneLink = element.select("div.db-tooltip__bt_item_detail > a");
+		ParserUtils.checkElementsSize(lodestoneLink, 1, "Cannot find HTML for lodestone link to character item");
+		// format should be "/lodestone/playguide/db/item/<id>/"
+		String lodestoneId = lodestoneLink.attr("href").split("/")[5];
+		item.setId(lodestoneId);
+
 		// get item name
 		Elements itemName = element.select("h2.db-tooltip__item__name");
 		ParserUtils.checkElementsSize(itemName, 1, "Cannot find HTML for character item name");
